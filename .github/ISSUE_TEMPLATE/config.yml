@@ -1,0 +1,9 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 提問 / 討論（GitHub Discussions）
+    url: https://github.com/neojou/CurrencyViewer/discussions
+    about: 非任務/非 bug 的問題，請優先用 Discussions（例如：設計討論、想法、Q&A）。
+  - name: 安全性問題回報
+    url: https://github.com/neojou/CurrencyViewer/security/policy
+    about: 若發現安全性漏洞，請依 Security Policy 指引回報（若尚未建立，先暫用 private channel）。
+
