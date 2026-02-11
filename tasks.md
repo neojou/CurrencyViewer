@@ -21,7 +21,9 @@ Scope: v1.6 (MVP)
 
 ## 2. Sprint 規劃（建議）
 - Sprint 0（腳手架/部署）：1–2 天
-- Sprint 1（MVP 功能）：3–5 天
+  - Buffer（風險）：+0.5 天（Wasm 產物路徑 / GitHub Pages base path / Actions workflow 調整）
+- Sprint 1（MVP 功能）：3–5 天（建議以 5 天做預期）
+  - Buffer（風險）：+0.5–1 天（Hover tooltip 的 Desktop/Wasm pointer event 差異與調整）
 - Sprint 1.1（補強/修 bug）：1–2 天
 
 ---
@@ -117,22 +119,39 @@ Scope: v1.6 (MVP)
   - 30 天資料點可連成線
   - 視窗改變大小時重新 layout，不裁切
 
-### T1.5 Hover tooltip：顯示日期 + 匯率（nearest-by-x）
-- Priority: P0 / Size: M
+### T1.5a Hover tooltip（Desktop）：顯示日期 + 匯率（nearest-by-x）
+- Priority: P0 / Size: S
 - Owner: Coder + Reviewer
 - Output:
-  - 滑鼠在圖上移動時：
+  - Desktop 上滑鼠在圖上移動時：
     - 計算游標 x 對應到序列 index
     - 取 nearest-by-x 的資料點
     - 在該點上方顯示「YYYY-MM-DD  +  匯率值」
   - 游標離開圖區域：tooltip 消失
 - DoD:
   - Desktop：mouse hover 穩定可用
+  - 不需要點擊；純 hover
+- Reviewer checklist:
+  - tooltip 計算與 UI 解耦（可測試）
+  - 不要每次 pointer move 都做昂貴重算（簡單算 index 即可）
+
+### T1.5b Hover tooltip（Wasm）：顯示日期 + 匯率（nearest-by-x）
+- Priority: P0 / Size: M
+- Owner: Coder + Reviewer
+- Output:
+  - Wasm（Browser）上滑鼠在圖上移動時：
+    - 計算游標 x 對應到序列 index
+    - 取 nearest-by-x 的資料點
+    - 在該點上方顯示「YYYY-MM-DD  +  匯率值」
+  - 游標離開圖區域：tooltip 消失
+- DoD:
   - Wasm：mouse hover 可用（瀏覽器）
   - 不需要點擊；純 hover
 - Reviewer checklist:
   - tooltip 計算與 UI 解耦（可測試）
   - 不要每次 pointer move 都做昂貴重算（簡單算 index 即可）
+- Notes:
+  - 允許針對 Wasm 平台做最小平台差異封裝（例如事件取得座標方式），但核心 tooltip 對應邏輯需放在 commonMain。
 
 ### T1.6 錯誤狀態與降級顯示
 - Priority: P0 / Size: S
@@ -205,4 +224,3 @@ Scope: v1.6 (MVP)
 - P1：加「手動刷新」按鈕（重新抓 latest + series）
 - P1：多資料源 fallback（Frankfurter 失敗改用另一家）
 - P2：視覺微調（顏色、網格線、字體）
-
