@@ -109,7 +109,7 @@ From role → To role:
 - 對架構/依賴/CI 等改動提出 gate（合併門檻）
 
 模板：
-```text
+```md
 ## Review Summary
 - Scope reviewed: <files/modules/PR link>
 - Overall status: <APPROVE / REQUEST CHANGES / COMMENT>
@@ -132,7 +132,7 @@ From role → To role:
 - Follow-up issue suggestion: <title + labels + milestone>
 
 ## Verification
-<!-- Reviewer 覺得應該跑的驗證（依 PR 性質增減） -->
+<!-- QE 覺得應該跑的驗證（依 PR 性質增減） -->
 - [ ] `./gradlew build` (if applicable)
 - [ ] Desktop: ... (if applicable)
 - [ ] Wasm: ... (if applicable)
@@ -152,7 +152,7 @@ From role → To role:
 - 需要由人類 Owner 在 browser 手動轉述時：請用此格式貼在 Issue comment 中（最容易追蹤）
 
 模板：
-```text
+```md
 ## Handoff
 From role → To role: <role:a> → <role:b>
 
@@ -160,19 +160,19 @@ From role → To role: <role:a> → <role:b>
 - ...
 
 ### Where to look
-- PR: <link>
+- PR: <PR link>
 - Files:
-  - <path>
-  - <path>
+    - <path>
+    - <path>
 - ADR(s): docs/decisions/ADR-XXXX-...
 
 ### How to verify
 - Commands:
-  - `./gradlew build` (if applicable)
-  - Desktop: <command> (if applicable)
-  - Wasm: <command> (if applicable)
+    - `./gradlew build` (if applicable)
+    - Desktop: <command> (if applicable)
+    - Wasm: <command> (if applicable)
 - Manual steps:
-  - ...
+    - ...
 
 ### Decisions / Constraints
 - ...
@@ -202,7 +202,7 @@ Status labels 用來表示「這張工作目前在哪個流程階段」，讓團
 
 狀態定義（含 entry / exit 規則）
 
-```text
+```md
 status:ready
 Meaning: 需求/AC/DoD 已清楚、依賴已滿足，可立刻開始。
 Entry: PM/Owner 補齊 Context、AC、Verification，並確認無阻塞。
@@ -258,16 +258,16 @@ handoff（需要跨角色交接）
 - 工作會拆成多階段、多 PR，需要明確交接點。
 
 貼了之後的 DoD 加碼：
-- Issue 或 PR 完成時必填 Handoff 區塊（Where to look / How to verify / Risks & follow-ups）
-- Handoff 內必須指向「下一步的 owner role」與「下一張 issue/PR（若已存在）」
+- [ ] Issue 或 PR 完成時必填 Handoff 區塊（Where to look / How to verify / Risks & follow-ups）
+- [ ] Handoff 內必須指向「下一步的 owner role」與「下一張 issue/PR（若已存在）」
 
 breaking-change（可能破壞相容性）
 何時貼：
 - 變更可能導致升級後無法編譯/無法建置/行為不相容（例如大幅調整 Gradle/toolchain、改 public API、改資料格式或 CLI/任務名稱）。
 貼了之後的 DoD 加碼：
-- 必須在 Issue/PR 描述「Breaking 的點」與「遷移/回退方式」
-- 必須補強 Verification（至少 build + 相關平台驗證）
-- 若是政策性改動，建議同時貼 decision 並補 ADR
+- [ ] 必須在 Issue/PR 描述「Breaking 的點」與「遷移/回退方式」
+- [ ] 必須補強 Verification（至少 build + 相關平台驗證）
+- [ ] 若是政策性改動，建議同時貼 decision 並補 ADR
 
 good-first-issue（適合新加入者，可選）
 何時貼：
@@ -286,6 +286,8 @@ Handoff：記「工作交接」，讓下一角色能直接開始。
 ---
 
 ## 7) 範例（最小示範，≤ 15 行/範例）
+<...> 代表占位符；請在使用時替換成實際值（例如 <PR link>、<Issue #>）。
+
    Example A — Work Request（docs 任務）
 ```md
 ## Role / Owner
