@@ -34,6 +34,11 @@ Co-owners (optional): <role:...>
 - ADR(s): docs/decisions/ADR-XXXX-...
 - Related Issue/PR:
 
+## Status (workflow)
+<!-- Optional but recommended -->
+- Current: <status:ready / status:blocked / status:in-progress / status:needs-review / status:needs-decision>
+- Blocker (if blocked): <one clear reason, e.g. "Blocked: waiting for ADR-0001 decision">
+
 ## Scope
 <!-- 要做什麼（in scope） -->
 - ...
@@ -171,14 +176,58 @@ From role → To role: <role:a> → <role:b>
 
 - 若交接內容牽涉決策，請把決策落在 ADR，再由 handoff 連結 ADR。
 
-## 4) ADR vs Meetings vs Handoff（何時用哪個）
+## 4) Issue Status（workflow labels）
+
+Status labels 用來表示「這張工作目前在哪個流程階段」，讓團隊不用看板也能用 label 篩出：
+- 目前可開工的清單（status:ready）
+- 被阻塞的清單（status:blocked）
+- 正在做的清單（status:in-progress）
+- 等待審查的清單（status:needs-review）
+- 等待決策的清單（status:needs-decision）
+
+原則：
+- 一張 open issue **最多只貼 1 個 status**（避免衝突）。
+- status 必須對應「下一個 owner / 下一個 action / 明確等待條件」，否則 status 會變成噪音。[web:391]
+
+### 狀態定義（含 entry / exit 規則）
+
+#### status:ready
+Meaning: 需求/AC/DoD 已清楚、依賴已滿足，可立刻開始。
+Entry: PM/Owner 補齊 Context、AC、Verification，並確認無阻塞。
+Exit: 有人開始執行 → 改成 status:in-progress；若發現缺資訊/依賴 → status:blocked 或 status:needs-decision。
+
+#### status:blocked
+Meaning: 工作無法繼續，且有「單一且具體」的阻塞原因。
+Entry: 執行者遇到依賴/缺資訊，必須在 issue 留下 `Blocked: <原因>`。
+Exit: 阻塞解除 → 回到 status:ready 或 status:in-progress（視是否已有人接手）。
+
+#### status:in-progress
+Meaning: 有人正在主動處理（通常已有分支/PR 或明確下一步）。
+Entry: 開始動工。
+Exit: 提交 PR 等待審查 → status:needs-review；遇到依賴 → status:blocked。
+
+#### status:needs-review
+Meaning: 工作已完成到可檢查程度，等待 Reviewer/QA/Owner 驗收或審查。
+Entry: PR ready for review（或明確指定 reviewer/qa/owner 驗收）。
+Exit: 需要修改 → status:in-progress；審查通過且已合併/完成 → 關閉 issue（或 status:done 若你們選用）。
+
+#### status:needs-decision
+Meaning: 卡在方案選擇/政策取捨，需要 Owner/團隊拍板（建議產出 ADR 或在 issue 記錄決議）。
+Entry: 出現不可逆決策點（例如 toolchain/CI policy/資料源取捨）。
+Exit: 決策完成（最好有 ADR 連結）→ 回到 status:ready 或 status:in-progress。
+
+#### status:done（可選）
+Meaning: 已完成且不需再行動。
+Note: 通常直接關閉 issue 即可，不一定需要此 label。[web:391]
+
+## 5) ADR vs Meetings vs Handoff（何時用哪個）
 - ADR：記「決策、替代方案、取捨、後果」，一決策一檔，長期可引用（決策日誌）。
 
 - Meetings（minutes）：記「討論過程摘要 + 決議 + action items」，時間序追加。
 
 - Handoff：記「工作交接」，讓下一角色能直接開始。
 
-## 5) 範例（最小示範）
+## 6) 範例（最小示範）
 範例 A：Reviewer → Technical Writer（README/CI） 
    
 - Decision（ADR）：docs/decisions/ADR-0001-build-toolchain-policy.md
