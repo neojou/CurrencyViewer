@@ -161,18 +161,12 @@ From role → To role: <role:a> → <role:b>
 
 ### Where to look
 - PR: <PR link>
-- Files:
-    - <path>
-    - <path>
+- Files: <path>, <path>
 - ADR(s): docs/decisions/ADR-XXXX-...
 
 ### How to verify
-- Commands:
-    - `./gradlew build` (if applicable)
-    - Desktop: <command> (if applicable)
-    - Wasm: <command> (if applicable)
-- Manual steps:
-    - ...
+- Commands: `./gradlew build` (if applicable); Desktop: <command> (if applicable); Wasm: <command> (if applicable)
+- Manual steps: ...
 
 ### Decisions / Constraints
 - ...
@@ -311,7 +305,7 @@ Owner role: Writer
 Example B — Review Notes（docs PR）
 ```md
 ## Review Summary
-- Scope reviewed: PR #?
+- Scope reviewed: <PR link>
 - Overall status: REQUEST CHANGES
 
 ## Must-fix (Blocking)
@@ -327,10 +321,10 @@ Example C — Handoff（QE → Writer）
 From role → To role: QE → Writer
 
 ### What changed
-- PR #? 已 review，需修正角色名與補 minimal examples
+- <PR link> 已 review，需修正範例一致性（code fence / placeholders）
 
 ### Where to look
-- PR: <link>
+- PR: <PR link>
 - File: docs/communication.md
 
 ### How to verify
