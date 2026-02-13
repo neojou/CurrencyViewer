@@ -17,20 +17,19 @@
    [前往文件 → roles.md](./roles.md)
 
 2. **`docs/communication.md`**  
-   → Work Request / Review Notes / Handoff 模板 + status / cross-cutting labels 規則（所有輸出都要遵守）  
+   → Work Request / Review Notes / Handoff 模板 + Status / cross-cutting labels 規則（所有輸出都要遵守）  
    [前往文件 → communication.md](./communication.md)
 
-3. **`docs/prompt-templates/`** (若已有；若不存在 → TODO: 建立或先略過）      
+3. **`docs/prompt-templates/`**（若已建立；若不存在 → TODO: 可另開 Issue 補齊）  
    → 各角色專屬 prompt 模板（複製貼上即可開工）  
    [前往資料夾 → prompt-templates/](./prompt-templates/)
-   若不存在，先略過並依 roles/communication 開工
 
 4. **產品 / 架構 / 任務文件**（以 repo 根目錄為準；若不存在 → TODO: 建立）
    - [requirements.md](../requirements.md)
    - [architecture.md](../architecture.md)
    - [tasks.md](../tasks.md)
 
-5. **ADR（決策紀錄）**  (若不存在 → TODO: 建立 `docs/decisions/`）
+5. **ADR（決策紀錄）**（若不存在 → TODO: 建立 `docs/decisions/`）  
    → 所有架構/政策決策的單一真實來源（SSoT）  
    [前往資料夾 → decisions/](./decisions/)
 
@@ -53,17 +52,14 @@
 
 ---
 
-## 3) 怎麼開工（快速上手流程）
+## 3) 5 分鐘上手（占位符）
 
-每次新對話 / 新任務，請照以下流程啟動：
+如果你只想最快開始協作：
 
 1. 先讀完：[`docs/roles.md`](./roles.md)、[`docs/communication.md`](./communication.md)。
-2. 開新聊天視窗
-3. 用「系統啟動模板」開新對話（見下方）。
-4. 由人類 Owner 指派第一個角色與任務（例如 `PM:` 或 `Coder:`）。
-5. 交付物一律落在 repo（Issue / PR / ADR / docs），不要只留在聊天紀錄。
-6. 嚴格遵守該角色 DoD 與 `docs/communication.md` 的輸出格式
-7. 完成後用 Handoff 格式交接（必貼在對應 Issue comment；必要時同步到 PR description）
+2. 用「系統啟動模板」開新對話（見下方）。
+3. 由人類 Owner 指派第一個角色與任務（例如 `PM:` 或 `Coder:`）。
+4. 交付物一律落在 repo（Issue / PR / ADR / docs），不要只留在聊天紀錄。
 
 ---
 
@@ -78,7 +74,7 @@
 
 ---
 
-### 5) 角色名稱（canonical，固定拼法）
+## 5) 角色名稱（canonical，固定拼法）
 
 本 repo 僅承認以下角色名稱（短版）；請勿使用別名（例如 ProjectManager/QualityEngineer/TechnicalWriter 等）。
 
@@ -161,7 +157,6 @@
 
 現在請確認你已理解以上規則，回覆「已理解，等待角色指定」。
 ```
-
 ## 10) 聯絡 Owner（人類）
 所有最終決策、scope 取捨、AC 確認，由人類 Owner 拍板。
 
