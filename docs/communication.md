@@ -220,14 +220,59 @@ Exit: 決策完成（最好有 ADR 連結）→ 回到 status:ready 或 status:i
 Meaning: 已完成且不需再行動。
 Note: 通常直接關閉 issue 即可，不一定需要此 label。[web:391]
 
-## 5) ADR vs Meetings vs Handoff（何時用哪個）
+## 5) Cross-cutting labels（跨領域標記：貼標準則）
+
+Cross-cutting labels 用來標記「跨模組/跨角色/跨流程」的特殊議題；這些標籤會影響 DoD/交接方式/風險控管。
+
+原則：
+- 這些標籤可以與 type/area/role/status 並存（它們是不同維度）。
+- 貼上 cross-cutting label 後，Issue/PR 必須滿足對應的額外要求（見下）。
+
+### `decision`（會產生或更新 ADR）
+何時貼：
+- 需要在多個方案中選一個，且會影響後續長期維護/相容性/協作方式（例如 toolchain、CI policy、資料源策略、跨平台架構策略）。
+- 同一類決策若不記錄，未來很可能重複討論。
+
+貼了之後的 DoD 加碼：
+- [ ] 必須新增或更新一份 ADR：`docs/decisions/ADR-XXXX-*.md`
+- [ ] Issue/PR 內必須連結該 ADR（Context/Links）
+
+（ADR 目標是記錄架構上重要決策及其脈絡與後果，作為決策日誌。）
+
+### `handoff`（需要跨角色交接）
+何時貼：
+- 這張工作完成後，下一步明確需要由「不同角色」接續（例如 Reviewer → Technical Writer、PM → DevOps）。
+- 工作會拆成多階段、多 PR，需要明確交接點。
+
+貼了之後的 DoD 加碼：
+- [ ] Issue 或 PR 完成時必填 Handoff 區塊（Where to look / How to verify / Risks & follow-ups）
+- [ ] Handoff 內必須指向「下一步的 owner role」與「下一張 issue/PR（若已存在）」
+
+### `breaking-change`（可能破壞相容性）
+何時貼：
+- 變更可能導致升級後無法編譯/無法建置/行為不相容（例如大幅調整 Gradle/toolchain、改 public API、改資料格式或 CLI/任務名稱）。
+
+貼了之後的 DoD 加碼：
+- [ ] 必須在 Issue/PR 描述「Breaking 的點」與「遷移/回退方式」
+- [ ] 必須補強 Verification（至少 build + 相關平台驗證）
+- [ ] 若是政策性改動，建議同時貼 `decision` 並補 ADR
+
+### `good-first-issue`（適合新加入者，可選）
+何時貼：
+- 範圍小、風險低、說明清楚、有明確驗收方式，且不需要深度領域知識即可完成。
+- 建議同時確保 issue 具備足夠 Context/Links 與 Verification 指令。
+
+備註：
+- GitHub 建議用 `good first issue` 來凸顯新手可貢獻的工作，並提升被發現的機會。[web:425]
+
+## 6) ADR vs Meetings vs Handoff（何時用哪個）
 - ADR：記「決策、替代方案、取捨、後果」，一決策一檔，長期可引用（決策日誌）。
 
 - Meetings（minutes）：記「討論過程摘要 + 決議 + action items」，時間序追加。
 
 - Handoff：記「工作交接」，讓下一角色能直接開始。
 
-## 6) 範例（最小示範）
+## 7) 範例（最小示範）
 範例 A：Reviewer → Technical Writer（README/CI） 
    
 - Decision（ADR）：docs/decisions/ADR-0001-build-toolchain-policy.md
