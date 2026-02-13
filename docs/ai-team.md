@@ -97,9 +97,9 @@
 - **流程 / 規範 / 模板 / 角色 / ADR 政策類**：`.github/ISSUE_TEMPLATE/ai-process.md`（若不存在 → TODO: 建立或先略過）
 - PR 一律套用 `.github/PULL_REQUEST_TEMPLATE.md`（若不存在 → TODO: 建立或先略過）
 
-（檔案連結，方便檢視）
-- [ai-task.md](../.github/ISSUE_TEMPLATE/ai-task.md)
-- [ai-process.md](../.github/ISSUE_TEMPLATE/ai-process.md)
+（檔案路徑，方便檢視）
+- TODO（尚未建立）：`.github/ISSUE_TEMPLATE/ai-task.md`
+- TODO（尚未建立）：`.github/ISSUE_TEMPLATE/ai-process.md`
 - [PULL_REQUEST_TEMPLATE.md](../.github/PULL_REQUEST_TEMPLATE.md)
 
 ---
