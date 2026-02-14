@@ -83,7 +83,6 @@
 - `Architect:`
 - `Coder:`
 - `QE:`
-- `DevOps:`
 - `Writer:`
 - `Artist:`
 
@@ -142,7 +141,6 @@
    Architect:
    Coder:
    QE:
-   DevOps:
    Writer:
    Artist:
    請立刻切換成該角色，並以該角色的視角、責任、輸出格式回應。
