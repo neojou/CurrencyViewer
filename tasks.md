@@ -224,3 +224,14 @@ Scope: v1.6 (MVP)
 - P1：加「手動刷新」按鈕（重新抓 latest + series）
 - P1：多資料源 fallback（Frankfurter 失敗改用另一家）
 - P2：視覺微調（顏色、網格線、字體）
+
+## 8. 注意事項
+
+### Toolchain / Build risk note
+
+- Policy SSOT: docs/decisions/ADR-0001-build-toolchain-policy.md
+- Baseline: Java 25 + Kotlin 2.3.0 + Gradle Wrapper 9.1.0
+- Known risk: Kotlin documents Gradle 9.0.0 as the maximum fully supported Gradle for KGP 2.3.0; newer Gradle may work but can produce deprecation warnings or incomplete support.
+- Mitigation:
+  - CI pins JDK/Gradle/Kotlin versions.
+  - Any build warnings should be tracked with issues (include logs + versions + repro steps).
