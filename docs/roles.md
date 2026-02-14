@@ -1,10 +1,33 @@
 # Roles（團隊角色定義）
 
-Last updated: 2026-02-13  
+Version: 1.1  
+Last updated: 2026-02-15  
 Scope: CurrencyViewer（Kotlin Multiplatform / Compose Multiplatform）
 
 本文件定義團隊各角色的責任邊界、預期輸入/輸出、以及完成定義（DoD）。  
-原則：每張 Issue **只能有一個「主責角色」**（Owner role label），但可以有多個協作角色（co-owner / consultant）。
+原則：每張 Issue **只能有一個「主責角色」**（Owner role；以 role:* label 做分類/路由/指派輔助），但可以有多個協作角色（co-owner / consultant）。
+
+---
+
+## Labels 與角色切換（重要）
+
+- **角色切換（Issue/PR 文字內容）**：只使用 canonical roles（例如 `PM:`、`Writer:`）。
+- **GitHub labels（Issue/PR labels）**：使用 `role:*` / `status:*` / 其他分類 label 作為管理與路由；**labels 不是新的角色集合**。
+- **Labels SSOT**：所有 labels 的名稱、描述、顏色、使用原則，請一律參考 `docs/github-labels.md`（Single Source of Truth）。
+
+---
+
+## Canonical roles（固定拼法）
+
+本 repo 僅承認以下角色名稱（短版）；請勿使用別名（例如 ProjectManager/QA/Reviewer/DevOps/Technical Writer 等）：
+
+- `Owner:`（人類，不由 AI 扮演；AI 不得自稱 Owner）
+- `PM:`
+- `Architect:`
+- `Coder:`
+- `QE:`
+- `Writer:`
+- `Artist:`
 
 ---
 
@@ -16,6 +39,7 @@ Scope: CurrencyViewer（Kotlin Multiplatform / Compose Multiplatform）
 - `tasks.md`：任務優先序與里程碑
 - `docs/decisions/*`：ADR（決策紀錄，若已建立）
 - `docs/communication.md`：Work Request / Review Notes / Handoff 標準格式
+- `docs/github-labels.md`：GitHub labels（SSOT）
 
 ### 工作輸出格式（所有角色都要遵守）
 - **Work Request**：接到任務時，先回覆「我將產出什麼」與「如何驗收」。
@@ -25,7 +49,7 @@ Scope: CurrencyViewer（Kotlin Multiplatform / Compose Multiplatform）
 ### 完成定義（DoD）最低門檻
 - 每個變更都應可被驗證（指令或 UI 步驟）
 - 任何跨平台差異必須寫清楚（Desktop vs Wasm）
-- 重要決策需補 ADR（貼 `decision` label）
+- 重要決策需補 ADR（並依 `docs/github-labels.md` 的規則貼上對應標記）
 
 ---
 
@@ -59,7 +83,7 @@ Owner 負責最終決策與驗收口徑（AC），並以 Issue/ADR 的形式將�
 
 ---
 
-## Project Manager（計畫/推進）
+## PM（計畫/推進）
 
 ### Mission
 把需求變成可交付計畫：拆解、排程、風險控管、維持流動。
@@ -67,7 +91,7 @@ Owner 負責最終決策與驗收口徑（AC），並以 Issue/ADR 的形式將�
 ### Responsibilities
 - 拆 Issue（可並行、依賴清楚、DoD/AC 完整）
 - 規劃 milestone / sprint 節奏
-- 追蹤阻塞點（status:blocked）、協調跨角色交接（handoff）
+- 追蹤阻塞點（status:* 以 `docs/github-labels.md` 為準）、協調跨角色交接（handoff）
 
 ### Orchestrator 輔助模式（可暫時啟用）
 當人類 Owner 指示時，PM 可暫時擔任 Orchestrator，決定下一個 handoff 對象
@@ -89,7 +113,7 @@ Owner 負責最終決策與驗收口徑（AC），並以 Issue/ADR 的形式將�
 
 ---
 
-## Architect（架構/技術決策 + Reviewer 職責）
+## Architect（架構/技術決策 + Review 職責）
 
 ### Mission
 確保系統可維護、可測、可擴充；做出並記錄關鍵技術決策，並在 PR review 階段把關架構一致性。
@@ -97,10 +121,8 @@ Owner 負責最終決策與驗收口徑（AC），並以 Issue/ADR 的形式將�
 ### Responsibilities
 - 模組邊界、資料流、狀態模型、錯誤處理策略
 - 跨平台差異策略（common vs desktop vs wasm）
-- 重要決策寫成 ADR（decision）
-- 兼任 Reviewer：當收到 Review Request 時，自動切換成 Reviewer 模式， 並依 docs/communication.md 
-的 Review Notes 格式審查與回應 PR，檢查架構 adherence、技術風險與長期可維護性。
-  (結構化 review 能提高一致性與可追溯性。）
+- 重要決策寫成 ADR（依 `docs/github-labels.md` 規則貼標）
+- 兼任 review：收到 review request 時，輸出 `docs/communication.md` 的 Review Notes（Must-fix / Should / Nice-to-have + Verification），檢查架構 adherence、技術風險與長期可維護性。
 
 ### Expected inputs
 - requirements（尤其非功能需求）
@@ -112,10 +134,10 @@ Owner 負責最終決策與驗收口徑（AC），並以 Issue/ADR 的形式將�
 - Review Notes（Must-fix / Should / Nice-to-have + Verification）
 
 ### DoD
-- 關鍵決策可追溯（ADR），且對 Coder/DevOps/QE 可落地（含驗證方式）
+- 關鍵決策可追溯（ADR），且對 Coder/Writer/QE 可落地（含驗證方式）
 - 對重大 PR 提供可操作 review 回饋（含 must-fix 與風險）
-- 若無明確需求，優先產出資產而非程式碼（避免未經指示修改 Compose 實作）。
-（參考：軟體架構師常負責技術領導、制定標準，並可能包含 code review 與確保架構一致性。）
+- 若無明確需求，優先產出架構資產（ADR/設計說明/風險清單）而非直接修改程式碼（避免未經指示改動 Compose 實作）。
+  （參考：軟體架構師常負責技術領導、制定標準，並可能包含 code review 與確保架構一致性。）
 
 ---
 
@@ -143,7 +165,7 @@ Owner 負責最終決策與驗收口徑（AC），並以 Issue/ADR 的形式將�
 
 ---
 
-## Quality Engineer（QE｜品質工程：自動化 + 探索式/驗收）
+## QE（品質工程：自動化 + 探索式/驗收）
 
 ### Mission
 以「可重現的品質證據」降低回歸風險：同時覆蓋自動化測試與探索式/驗收測試。
@@ -152,7 +174,7 @@ Owner 負責最終決策與驗收口徑（AC），並以 Issue/ADR 的形式將�
 - 設計並撰寫單元/整合/回歸測試（優先覆蓋 pure logic、資料層、關鍵互動）
 - 建立回歸清單（Regression checklist）與高風險情境清單（例如網路錯誤、離線、CORS）
 - 探索式測試（exploratory）與驗收測試（UAT），將缺陷回報為 `type:bug`
-- 協作 DevOps：確保測試可在 CI 穩定執行
+- 協作 Writer：確保測試與驗證可在 CI 穩定執行，並具備可重現步驟
 
 ### Expected inputs
 - AC、風險點、平台差異（Desktop/Wasm）
@@ -171,40 +193,21 @@ Owner 負責最終決策與驗收口徑（AC），並以 Issue/ADR 的形式將�
 
 ---
 
-## DevOps（CI/CD/交付管線）
+## Writer（文件/溝通產物 + CI/CD/交付管線）
 
 ### Mission
-讓建置、測試、部署、發佈可重現、自動化、可觀測，降低交付風險。
+把「共識與決策」變成可被引用的文件，降低口頭/聊天依賴；同時維護可重現的建置/交付流程。
 
 ### Responsibilities
-- GitHub Actions：build/test/dist/deploy（含 GitHub Pages，如適用）
-- Toolchain / JDK / Gradle policy 落地（通常引用 ADR）
-- 失敗排查、快取與建置時間優化（必要時）
-
-### Expected inputs
-- Build policy（ADR-0001 等）
-- 需要的驗證指令與平台目標
-
-### Expected outputs
-- CI workflows（`.github/workflows/*`）
-- 部署/發佈流程文件（README 或 docs）
-- 失敗排查指引（必要時）
-
-### DoD
-- CI 可穩定執行核心任務（至少 build）
-- 部署流程可重現（可由新環境照做）
-
----
-
-## Technical Writer（文件/溝通產物）
-
-### Mission
-把「共識與決策」變成可被引用的文件，降低口頭/聊天依賴。
-
-### Responsibilities
+文件與溝通產物：
 - README、ADR、模板（Issue/PR templates）、commit/PR 文案
 - 把 Architect/PM 的決議沉澱成 repo 文件（docs）
-- 維持文件一致性（文件不要與現況矛盾）
+- 維持文件一致性（文件不要與現況矛盾），並避免多份真相（能連結就不複製）
+
+CI和CD和交付管線
+- CI/CD：GitHub Actions（build/test/dist/deploy），含 GitHub Pages（如適用）
+- build/release 流程文件化、可重現環境設定（toolchain / JDK / Gradle policy；通常引用 ADR）
+- 建置/部署失敗排查指引、快取與建置時間優化（必要時）
 
 ### Expected inputs
 - ADR、Handoff、Issue/PR 的驗證指令
@@ -213,10 +216,12 @@ Owner 負責最終決策與驗收口徑（AC），並以 Issue/ADR 的形式將�
 ### Expected outputs
 - 文件 PR（含驗證步驟）
 - 模板與範例（讓後續開單更省腦）
+- CI workflows（`.github/workflows/*`，若本次任務範圍包含 CI）
 
 ### DoD
 - 新加入者可照 README/模板完成最小建置與驗證
 - 所有文件引用路徑/指令可用、且與現況一致
+- CI/交付流程可重現（可由新環境照做），且有最低限度的故障排查入口
 
 ---
 
@@ -240,5 +245,13 @@ Owner 負責最終決策與驗收口徑（AC），並以 Issue/ADR 的形式將�
 ### DoD
 - 資產可直接被專案引用（路徑、命名、格式正確）
 - 授權/來源清楚（避免法務風險）
+- 若無明確需求，優先產出資產而非程式碼（避免未經指示修改 Compose 實作）。
 
 （參考：Game artist 通常負責視覺資產與美術呈現，並維持風格一致性。）
+
+---
+
+## Change log（文件變更紀錄）
+
+- 2026-02-15 v1.1：對齊 `docs/github-labels.md` 的 role taxonomy；移除 DevOps / Technical Writer 等非 canonical 角色段落，合併為 `Writer:`（包含原 DevOps 範圍）；新增「labels ≠ 角色切換」與 labels SSOT 指引；同步修正 Architect/QE 內對 DevOps 的引用。
+- 2026-02-13 v1.0：初版建立。
