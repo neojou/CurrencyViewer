@@ -23,7 +23,28 @@ See ADR: `docs/decisions/ADR-0001-build-toolchain-policy.md`
 
 ## Build (Desktop + Wasm)
 
+1. 檢查 Gradle 版本是否為 9.1.0
+
 ```bash
+./gradlew --version
+```
+執行結果：
+```text
+------------------------------------------------------------
+Gradle 9.1.0
+------------------------------------------------------------
+```
+
+2. 更新 Gradle 為 9.1.0
+
+```bash
+./gradlew wrapper --gradle-version=9.1.0
+````
+
+3. 編譯
+
+```bash
+./gradlew clean
 ./gradlew build
 ```
 
