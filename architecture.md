@@ -95,4 +95,30 @@ composeApp/
 └── wasmJsMain/kotlin/...
 ```
 
+## 資料流與狀態
 
+### 概述
+系統資料流遵循 MVP 架構：API → Domain Models → UiState → Compose UI。
+- **API Layer**（未來實作）：從 Frankfurter API 取得原始 JSON，轉換為 Domain Models。
+- **Domain Models**：核心資料結構，跨平台共用（commonMain）。包含 FxPair（固定貨幣對）、DailyRatePoint（日線點）、LatestRate（最新匯率）。
+- **UiState**：包裝狀態，支援 Loading/Ready/Error，使用 sealed interface 泛型。
+- **UI Layer**：Compose 消費 UiState，顯示圖表與最新值。
+
+### 模型說明
+- FxPair: Value class，固定 "USD/JPY"。
+- DailyRatePoint: Data class (date: LocalDate, rate: Double) – 用於日線圖。
+- LatestRate: Data class (date: LocalDate, rate: Double) – 用於最新顯示。
+- UiState<T>: Sealed interface – Loading, Ready(data: T), Error(message: String, cause: Throwable?)。
+
+### 狀態管理建議
+使用 Kotlin Flow 或 Compose State：
+- ViewModel 中以 StateFlow<UiState<T>> 管理（Desktop/Wasm 共用）。
+- 未來擴展：MVI 或 Redux-like，若需複雜 side effects。
+
+### 簡單資料流圖
+```mermaid  
+graph TD  
+    A[Frankfurter API] --> B[API Client]  
+    B --> C[Domain Models: FxPair, DailyRatePoint, LatestRate]  
+    C --> D[UiState: Loading/Ready/Error]  
+    D --> E[Compose UI: Chart & Latest Rate]  
