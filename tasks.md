@@ -79,6 +79,8 @@ Scope: v1.6 (MVP)
   - architecture.md（最小版）新增「資料流與狀態」段落
   - commonMain 有對應資料類別（或至少介面）
 
+---
+
 ### T1.2 實作 Frankfurter client（latest + 30d series）
 - Priority: P0 / Size: M
 - Owner: Coder
@@ -94,6 +96,33 @@ Scope: v1.6 (MVP)
 - Notes:
   - v1.6 不需要快取；可在 v1.7 再加
 
+### T1.2.1 Setup Ktor + CIO engine
+- Priority: P0 / Size: XS
+- Owner: Coder
+- DoD: dependencies 加完、CIO HttpClient factory 可建立
+
+### T1.2.2 Define Frankfurter DTOs & mappers
+- Priority: P0 / Size: S
+- Owner: Coder
+- DoD: serialization test pass
+
+### T1.2.3 Implement FrankfurterDataSource (Ktor calls)
+- Priority: P0 / Size: S
+- Owner: Coder
+- DoD: latest & timeseries endpoint 可 mock call 成功
+
+### T1.2.4 Implement RatesRepository + 30d window logic
+- Priority: P0 / Size: S
+- Owner: Coder
+- DoD: domain methods return correct Result<...>
+
+### T1.2.5 Cross-platform verification (Desktop + Wasm)
+- Priority: P0 / Size: S
+- Owner: Coder
+- DoD: 兩 target 皆 fetch 成功、error 不 crash
+
+---
+
 ### T1.3 畫面：Header + latest + date + chart layout
 - Priority: P0 / Size: M
 - Owner: Coder
@@ -108,6 +137,8 @@ Scope: v1.6 (MVP)
   - Desktop/Wasm 皆可顯示
   - 沒資料時顯示 Loading / Error
 
+---
+
 ### T1.4 線圖繪製（30 天）
 - Priority: P0 / Size: M
 - Owner: Coder
@@ -118,6 +149,8 @@ Scope: v1.6 (MVP)
 - DoD:
   - 30 天資料點可連成線
   - 視窗改變大小時重新 layout，不裁切
+
+---
 
 ### T1.5a Hover tooltip（Desktop）：顯示日期 + 匯率（nearest-by-x）
 - Priority: P0 / Size: S
@@ -152,6 +185,8 @@ Scope: v1.6 (MVP)
   - 不要每次 pointer move 都做昂貴重算（簡單算 index 即可）
 - Notes:
   - 允許針對 Wasm 平台做最小平台差異封裝（例如事件取得座標方式），但核心 tooltip 對應邏輯需放在 commonMain。
+
+---
 
 ### T1.6 錯誤狀態與降級顯示
 - Priority: P0 / Size: S
