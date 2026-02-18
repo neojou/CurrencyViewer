@@ -9,9 +9,16 @@ import kotlin.jvm.JvmInline
 * 注意：KMP commonMain 不使用 @JvmInline；value class 在 Desktop / Wasm 皆直接支援。
 */
 @JvmInline
-value class FxPair(val symbol: String) {
+value class FxPair private constructor(val code: String) {
+
+    init {
+        require(code == "USD/JPY") { "MVP phase only supports USD/JPY" }
+    }
+
+    override fun toString(): String = code
+
     companion object {
-        /** v1.6 唯一支援的貨幣對 */
-        val USD_JPY = FxPair("USD/JPY")
+        /** The only supported currency pair in current MVP scope. */
+        val USD_JPY: FxPair = FxPair("USD/JPY")
     }
 }
