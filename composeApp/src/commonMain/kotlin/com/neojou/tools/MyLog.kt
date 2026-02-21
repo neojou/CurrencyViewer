@@ -51,7 +51,7 @@ object MyLog {
      */
     private val entries: MutableList<LogEntry> = mutableListOf()
 
-    private var globalMinLevel: LogLevel = LogLevel.INFO
+    private var globalMinLevel: LogLevel = LogLevel.DEBUG
     private val moduleMinLevels: MutableMap<String, LogLevel> = mutableMapOf()
 
     // 程式啟動基準點
