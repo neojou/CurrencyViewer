@@ -101,9 +101,9 @@ composeApp/
     │   │   │   ├── components/
     │   │   │   └── screens/
     │   │   ├── data/
-    │   │   │   ├── dto/          # Frankfurter DTO（@Serializable）
-    │   │   │   └── mapper/       # DTO → Domain model（extension functions）
     │   │   │   ├── remote/
+    │   │   │   │   ├── dto/          # Frankfurter DTO（@Serializable）
+    │   │   │   │   └── mapper/       # DTO → Domain model（extension functions）
     │   │   │   └── repository/
     │   │   └── domain/
     │   │       └── model/
