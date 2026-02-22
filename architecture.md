@@ -1,7 +1,7 @@
 # CurrencyViewer Architecture
 
-**版本**：0.2  
-**最後更新**：2026-02-21  
+**版本**：0.3  
+**最後更新**：2026-02-22  
 **適用階段**：Sprint 0 ~ Sprint 1（初始骨架與單一畫面版本）
 
 ## 1. 核心設計原則
@@ -101,6 +101,8 @@ composeApp/
     │   │   │   ├── components/
     │   │   │   └── screens/
     │   │   ├── data/
+    │   │   │   ├── dto/          # Frankfurter DTO（@Serializable）
+    │   │   │   └── mapper/       # DTO → Domain model（extension functions）
     │   │   │   ├── remote/
     │   │   │   └── repository/
     │   │   └── domain/
@@ -146,6 +148,45 @@ graph TD
 - ViewModel 中以 StateFlow<UiState<T>> 管理（Desktop/Wasm 共用）。
 - 未來擴展：MVI 或 Redux-like，若需複雜 side effects。
 
-**變更紀錄**
-- v0.2 (2026-02-21)：新增 tools.web 包說明、Ktor CIO 引擎細節、通用網路層與業務層分離、更新資料流圖
+---
+### Frankfurter Mapping Policy（SSOT）
+本節為 DTO → Domain Model 轉換的**唯一真相**，所有 mapper 實作必須對齊，不得各自判斷：
 
+1. **DTO 的 date 欄位統一用 `String` 接收**（格式：`YYYY-MM-DD`），
+   mapper 內再呼叫 `LocalDate.parse(dateStr)` 轉型；
+   parse 失敗時需丟出含原始字串的明確例外，方便 debug。
+
+2. **quote currency 固定為 `"JPY"`**（v1.6 scope，base = USD）。
+
+3. **`/latest` response 缺少 JPY**：視為 error，
+   mapper 丟出 `IllegalStateException("Missing JPY in rates (base=..., date=...)")`，
+   由 Repository 層統一轉成 `UiState.Error`，不讓例外穿透到 UI。
+
+4. **`/timeseries` response 某日缺少 JPY**：**跳過該日**（`mapNotNull`），
+   最終 list 依 `date` 升冪排序後回傳。
+
+5. **`base` 欄位不影響 mapper 計算邏輯**，
+   domain model 只關心 quote rate 數值；
+   base 資訊僅用於 debug log 或錯誤訊息，不做業務判斷。
+
+---
+
+### KMP commonMain 相容性規則
+
+- **`@JvmInline` 是 `value class` 在 JVM target（Desktop）的必要 annotation**，
+  放在 `commonMain` 是正確做法；Wasm/JS target 會自動忽略此 annotation。
+
+- **其他純 JVM-only annotation**（如 `@JvmStatic`、`@JvmField`、`@JvmOverloads`）
+  若非必要，避免放在 `commonMain`；需要時改在 `desktopMain` 或以 `expect/actual` 處理。
+
+- 如需平台差異行為，一律使用 `expect/actual` 機制，不在 `commonMain` 做 platform check。
+
+---
+
+
+**變更紀錄**
+- v0.3 (2026-02-22)：
+- 新增「Frankfurter Mapping Policy（SSOT）」段落
+- 新增「KMP commonMain 相容性規則」段落
+- 補充 `data/remote/dto/` 與 `data/remote/mapper/` 至檔案組織約定
+- v0.2 (2026-02-21)：新增 tools.web 包說明、Ktor CIO 引擎細節、通用網路層與業務層分離、更新資料流圖
